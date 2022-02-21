@@ -11,6 +11,8 @@ public class RutNumberValidator implements
     private Pattern pattern;
     private Matcher matcher;
 
+
+
     public RutNumberValidator() {
         pattern = Pattern.compile(RUT_PATTERN);
     }
@@ -23,6 +25,7 @@ public class RutNumberValidator implements
     @Override
     public boolean isValid(String rut, ConstraintValidatorContext context) {
         if (rut == null) {
+
             return false;
         }
         rut = rut.replace(".", "");

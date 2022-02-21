@@ -18,8 +18,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">Primeiro nome</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{firstName}"
-                                       minlength="2" maxlength="20" th:errorClass="is-invalid" required>
+                                <input type="text" class="form-control" th:field="*{firstName}" th:errorClass="is-invalid"
+                                       minlength="2" maxlength="20">
                                 <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                                      class="invalid-feedback"></div>
                             </div>
@@ -28,8 +28,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">Ultimo nome</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{lastName}"
-                                       minlength="2" maxlength="20" th:errorClass="is-invalid" required>
+                                <input type="text" class="form-control" th:field="*{lastName}" th:errorClass="is-invalid"
+                                       minlength="2" maxlength="20">
                                 <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                      class="invalid-feedback"></div>
                             </div>
@@ -37,8 +37,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">Username</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{username}"
-                                       th:errorClass="is-invalid" required>
+                                <input type="text" class="form-control" th:field="*{username}"th:errorClass="is-invalid" >
                                 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                      class="invalid-feedback"></div>
                             </div>
@@ -48,7 +47,7 @@
                             <label class="col-form-label col-4">E-mail</label>
                             <div>
                                 <input type="email" class="form-control" th:field="*{email}" th:errorClass="is-invalid"
-                                       required>
+                                >
                                 <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                      class="invalid-feedback"></div>
                             </div>
@@ -57,8 +56,8 @@
                             <label class="col-form-label col-4">Senha</label>
                             <div>
                                 <input type="password" class="form-control" th:field="*{password}" id="password"
-                                       maxlength="12" th:errorClass="is-invalid" required>
-                                <input type="checkbox" th:onclick="showPassword()" >Mostrar senha
+                                       maxlength="12" th:errorClass="is-invalid">
+                                <input type="checkbox" th:onclick="showPassword()">Mostrar senha
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                      class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
                             </div>
@@ -67,7 +66,7 @@
                             <label class="col-form-label col-4">RUT</label>
                             <div>
                                 <input type="text" class="form-control" th:field="*{rut}" th:errorClass="is-invalid"
-                                       pattern="^[0-9\.\-]+$" required>
+                                       pattern="^[0-9\.\-]+$">
                                 <div th:if="${#fields.hasErrors('rut')}" th:errors="*{rut}"
                                      class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
                             </div>

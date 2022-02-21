@@ -3,16 +3,13 @@ package com.desafio.orion.controller;
 import com.desafio.orion.common.Utils;
 import com.desafio.orion.models.UserDTO;
 import com.desafio.orion.services.UserServiceImp;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,14 +21,8 @@ public class AccountController {
 
     private final UserServiceImp userServiceImp;
 
-    public AccountController( UserServiceImp userServiceImp) {
+    public AccountController(UserServiceImp userServiceImp) {
         this.userServiceImp = userServiceImp;
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
 
@@ -41,30 +32,32 @@ public class AccountController {
 
 
     @GetMapping("register")
-    public String registrar(Model model) {
+    public String registrar(UserDTO userDTO, Model model) {
         model.addAttribute("userDTO", new UserDTO());
 
         return "account/register";
     }
 
     @PostMapping("register")
-    public String registerProcess(@Valid UserDTO userDTO, BindingResult bindingResult) {
+    public String registerProcess(@Valid  UserDTO userDTO,BindingResult result, Model model) {
 
         if (userServiceImp.userExists(userDTO.getUsername())) {
-            bindingResult.addError(new FieldError("userDTO", "username"
+            result.addError(new FieldError("userDTO", "username"
                     , "Usuario ja esta em uso"));
         }
         if (userServiceImp.emailExists(userDTO.getEmail())) {
-            bindingResult.addError(new FieldError("userDTO", "email"
+            result.addError(new FieldError("userDTO", "email"
                     , "Email ja esta em uso"));
         }
+
+
         //Validador dados
-        if (bindingResult.hasErrors()) {
+        if (result.hasErrors()) {
             return "account/register";
         }
 
-        log.info(">>  user : {}", userDTO.toString());
         userDTO.setActive(true);
+        log.info(">>  user : {}", userDTO.toString());
         userDTO.setPassword(utils.passwordEncoder(userDTO.getPassword()));
 
         userServiceImp.salvar(userDTO);
@@ -73,7 +66,7 @@ public class AccountController {
 
     @GetMapping("login")
     public String homePage() {
-        return "login";
+        return "account/login";
     }
 
 }

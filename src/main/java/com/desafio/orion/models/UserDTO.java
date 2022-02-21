@@ -3,10 +3,7 @@ package com.desafio.orion.models;
 import com.desafio.orion.validator.IsValidRut;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -17,9 +14,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class UserDTO
 {
     private Long id;
@@ -42,6 +36,7 @@ public class UserDTO
             message = "Senha precisa ter 12 caracteres, 2 minusculos, 2 maiusculos, 2 especiais  e sem repetir o mesmo caracteres por 3 vezes sequencialmente")
     private String password;
 
+    @NotBlank(message = "")
     @IsValidRut
     private String rut;
 
