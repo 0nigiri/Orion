@@ -4,6 +4,7 @@ import com.desafio.orion.common.Utils;
 import com.desafio.orion.models.User;
 import com.desafio.orion.models.UserDTO;
 import com.desafio.orion.services.UserServiceImp;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -71,19 +72,27 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testEncoderPassword() {
+    public void testEncoderPasswordAndDelete() {
         UserDTO user = new UserDTO();
-        user.setEmail("thiag123o@gmail.com");
+        user.setEmail("thi1agox@gmail.com");
+        user.setUsername("thiagox");
         user.setPassword("123456");
         user.setFirstName("thiago");
         user.setLastName("onishi");
         user.setRut("123123123");
         user.setActive(true);
-        System.out.println(user.getPassword());
-
         user.setPassword(util.passwordEncoder(user.getPassword()));
+        userServiceImp.salvar(user);
 
-        System.out.println(user.getPassword());
+
+        User userTest = new User();
+        userTest = userServiceImp.getUserByUsername(user.getUsername());
+
+        assertTrue(encoder.matches("123456",userTest.getPassword()));
+
+        userServiceImp.delete(userTest.getId());
+
+        assertFalse(userServiceImp.emailExists("thi1agox@gmail.com"));
 
 
     }

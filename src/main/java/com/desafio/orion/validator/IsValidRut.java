@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IsValidRut {
 
-    String message() default "RUT Invalido, digite novamente um RUT valido";
+    String message() default "RUT invalido! Digite novamente um RUT valido.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

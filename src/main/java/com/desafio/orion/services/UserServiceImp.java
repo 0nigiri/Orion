@@ -32,11 +32,11 @@ public class UserServiceImp {
         return(List<User>) userRepository.findAll();
     }
 
-    public void delete(int id){
+    public void delete(long id){
         userRepository.delete(userRepository.getById(id));
     }
 
-    public User getUserByDd(int id){
+    public User getUserById(long id){
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(()-> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + id ));
     }
