@@ -1,4 +1,4 @@
-Neste desafio estarei usando Java com o framework Spring boot com o MySql como meu banco de dados, o motivo em usar esse framework seria por eu estar mais confortável em trabalhar com ela. 
+Neste desafio estarei usando Java com o framework Spring boot + thymeleaf com o MySql como meu banco de dados, o motivo em usar esse framework seria por eu estar mais confortável em trabalhar com ela. 
 
 Primeiramente ao entrar no localhost:8080, você entrara na página home onde você tera a opção de logar ou registrar uma conta nova. 
 
