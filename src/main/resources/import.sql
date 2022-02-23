@@ -1,1 +1,0 @@
-INSERT INTO user_tbl (`id`,`active`,`first_name`,`last_name`,`username`,`email`,`password`,`roles`,`rut`,`permissions`) VALUES (0,1,'admin','admin','admin','admin@admin','$2a$12$cfjXzVoYfTq0Dh7hgdUL0Oad8wf5vOSrRG.vdYXgktFMOqv5mpKYG','ADMIN','','');

@@ -13,13 +13,42 @@ import java.util.List;
 @NoArgsConstructor
 public class SkuDTO {
 
+    //USA,MEX,CHI
 
     private String distribuidora;
 
+    //EN,ES
+
     private String lingua;
+
+    //SG(single-game),MG(Multi-Games)
 
     private String contrato;
 
+
+    private String porcentagem;
+
+
+
+    private int quantidadePlacas;
+
+    private int numeroJogos;
+
+    // "Halloween", "Valentine's day", "Easter Sunday", "New Year", "Lunar New Year", "Thanksgiving", "Día de Muertos"
+
+    private List<String> jogos;
+
+    //id do local
+
+    private String local;
+
+    private String cidade;
+
+    //unixtime para o id do local e cidade
+
+    private long unixTime;
+
+    private String skuString;
 
 
 

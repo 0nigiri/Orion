@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checar Registro</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+    <title id="pageTitle">Registrado com sucesso</title>
 </head>
 <body>
+<div th:replace="fragments :: header"/>
     <div class="container text-center">
         <div>
             <h1>Registrado com sucesso</h1>

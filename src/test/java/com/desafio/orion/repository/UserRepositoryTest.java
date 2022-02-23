@@ -72,6 +72,31 @@ class UserRepositoryTest {
     }
 
     @Test
+    public void testUpdateData(){
+        User getUser = userServiceImp.getUserByUsername("admin");
+
+        assertTrue(getUser.getUsername().equals("admin"));
+        UserDTO user = userServiceImp.updateToDTO(getUser);
+        assertTrue(user.getUsername().equals("admin"));
+
+        user.setFirstName("thiago");
+        user.setLastName("onishi");
+
+        userServiceImp.salvar(user);
+
+        User checkUser = userServiceImp.getUserByUsername("admin");
+        assertTrue(checkUser.getFirstName().equals("thiago"));
+        assertTrue(checkUser.getLastName().equals("onishi"));
+        assertTrue(encoder.matches("admin", checkUser.getPassword()));
+
+
+
+
+    }
+
+
+
+    @Test
     public void testEncoderPasswordAndDelete() {
         UserDTO user = new UserDTO();
         user.setEmail("thi1agox@gmail.com");

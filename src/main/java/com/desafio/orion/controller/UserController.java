@@ -16,7 +16,17 @@ public class UserController {
 
     @GetMapping("")
     public String index(){
-        return "user/index";
+        return "";
+    }
+
+    @GetMapping("/listaSku")
+    public String listaSku(){
+        return "user/listaSku";
+    }
+
+    @GetMapping("/listaEspera")
+    public String listaSkuAtivados(){
+        return "user/listaSkuAtivados";
     }
 
 

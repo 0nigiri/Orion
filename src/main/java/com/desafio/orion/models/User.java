@@ -51,6 +51,10 @@ public class User {
         this.active = true;
     }
 
+    public User(User user) {
+    }
+
+
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));

@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head">
-    <title id="pageTitle">Registrar nova conta</title>
+    <title id="pageTitle">Editar Usuario</title>
 </head>
 <body>
+<div th:replace="fragments :: header"/>
 <div class="container">
     <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-user"></i>Registrar nova conta
+                <i class="fa fa-user"></i>Editar conta
             </div>
             <div class="card-block" style="padding: 24px;">
-                <form th:action="@{/register}" method="post" th:object="${userDTO}">
+                <form th:action="@{/admin/update/{id}(id=${userDTO.id})}" method="post" th:object="${userDTO}">
                     <fieldset>
                         <div class="form-group row">
                             <label class="col-form-label col-4">Primeiro nome</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{firstName}" th:errorClass="is-invalid"
+                                <input type="text" class="form-control" th:field="*{firstName}"
+                                       th:errorClass="is-invalid"
                                        minlength="2" maxlength="20">
                                 <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
                                      class="invalid-feedback"></div>
@@ -26,7 +28,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">Ultimo nome</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{lastName}" th:errorClass="is-invalid"
+                                <input type="text" class="form-control" th:field="*{lastName}"
+                                       th:errorClass="is-invalid"
                                        minlength="2" maxlength="20">
                                 <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                      class="invalid-feedback"></div>
@@ -35,7 +38,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">Username</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{username}"th:errorClass="is-invalid" >
+                                <input type="text" class="form-control-plaintext" th:field="*{username}"
+                                       th:errorClass="is-invalid" readonly>
                                 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                      class="invalid-feedback"></div>
                             </div>
@@ -44,17 +48,15 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">E-mail</label>
                             <div>
-                                <input type="email" class="form-control" th:field="*{email}" th:errorClass="is-invalid"
-                                >
-                                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                     class="invalid-feedback"></div>
+                                <input type="email" class="form-control-plaintext" th:field="*{email}" readonly>
+
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" hidden>
                             <label class="col-form-label col-4">Senha</label>
                             <div>
-                                <input type="password" class="form-control" th:field="*{password}" id="password"
-                                       maxlength="12" th:errorClass="is-invalid" >
+                                <input type="hidden" class="form-control" th:field="*{password}"   id="newPassword"
+                                       maxlength="12" th:errorClass="is-invalid" th:autocomplete="on" autocomplete="">
                                 <input type="checkbox" th:onclick="showPassword()">Mostrar senha
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                      class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
@@ -63,19 +65,16 @@
                         <div class="form-group row">
                             <label class="col-form-label col-4">RUT</label>
                             <div>
-                                <input type="text" class="form-control" th:field="*{rut}" th:errorClass="is-invalid"
-                                       pattern="^[0-9\.\-]+$">
-                                <div th:if="${#fields.hasErrors('rut')}" th:errors="*{rut}"
-                                     class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
+                                <input type="text" class="form-control-plaintext" th:field="*{rut}" readonly>
                             </div>
                         </div>
-
-                        <div class="form-group row" hidden>
-                            <label class="col-form-label col-4">Role</label>
+                        <div class="form-group row">
+                            <label class="col-form-label col-4" th:for="roles">Role</label>
                             <div>
-                                <input type="text" class="form-control" th:value="USER" th:id="roles" th:name="roles"
-                                       required
-                                       autocomplete="off"/>
+                                <select class="form-control form-control-sm" th:field="*{roles}" th:selected="*{roles}">
+                                    <option th:value="USER">USER</option>
+                                    <option th:value="ADMIN">ADMIN</option>
+                                </select>
                             </div>
                         </div>
 
@@ -93,5 +92,9 @@
         </div>
     </div>
 </div>
+
+
+
+
 </body>
 </html>

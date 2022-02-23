@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:include=":: #pageTitle" >Title</title>
+    <link href="/css/sort.css" type="text/css">
+    <link href="/css/bootstrap.css"  rel="stylesheet">
+    <link href="/css/bootstrap-grid.css"  rel="stylesheet">
+    <link href="/fontawesome/css/all.css" rel="stylesheet" >
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/utils.js"></script>
+    <script type="text/javascript" src="/js/search.js"></script>
+    <title>Header</title>
+</head>
+<body>
+
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand" >Desafio Orion</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{~/}">Home</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{~/admin/userlist}">Lista de Usuarios</a>
+                </li>
+
+                <li class="nav-item active" sec:authorize="isAuthenticated()" >
+                    <a class="nav-link" href="#" th:href="@{~/user/listaSku}">Lista de Sku </span></a>
+                </li>
+
+                <li class="nav-item active" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="#" th:href="@{~/user/listaEspera}">Lista de Espera</a>
+                </li>
+
+
+            </ul>
+            <div style="padding-right: 20px">
+            <span sec:authorize="isAuthenticated()" class="navbar-text">
+            Seja bem vindo <span th:text="${#authentication.name}"></span>  
+            </span>
+            </div>
+            <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
+                <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-1 my-sm-0" type="submit">
+                    Logout
+                </button>
+            </form>
+            <a th:href="@{~/login}">
+                <button sec:authorize="isAnonymous()" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="button">
+                    Login
+                </button>
+            </a>
+        </div>
+    </nav>
+</div>
+
+
+
+
+
+</body>
+</html>
