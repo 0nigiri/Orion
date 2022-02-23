@@ -6,3 +6,4 @@
     x.type = "password";
 }
 }
+

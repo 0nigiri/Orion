@@ -53,6 +53,19 @@ public class UserDTO
         this.permissions = permissions;
         this.active = true;
     }
+    public UserDTO(String firstName, String lastName, String username, String email, String password, String rut, boolean active, String roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.rut = rut;
+        this.active = active;
+        this.roles = roles;
+    }
+
+
+
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {

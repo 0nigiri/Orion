@@ -1,6 +1,7 @@
 package com.desafio.orion.controller;
 
 import com.desafio.orion.common.Utils;
+import com.desafio.orion.models.User;
 import com.desafio.orion.models.UserDTO;
 import com.desafio.orion.services.UserServiceImp;
 import org.slf4j.Logger;
@@ -9,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,9 +37,12 @@ public class AccountController {
         return "account/register";
     }
 
+
+
     @PostMapping("register")
     public String registerProcess(@Valid  UserDTO userDTO,BindingResult result, Model model) {
 
+        //Validador dados
         if (userServiceImp.userExists(userDTO.getUsername())) {
             result.addError(new FieldError("userDTO", "username"
                     , "Usuario ja esta em uso"));
@@ -49,17 +51,14 @@ public class AccountController {
             result.addError(new FieldError("userDTO", "email"
                     , "Email ja esta em uso"));
         }
-
-
-        //Validador dados
         if (result.hasErrors()) {
             return "account/register";
         }
 
-        userDTO.setActive(true);
+        //salvar novo usuario
         log.info(">>  user : {}", userDTO.toString());
+        userDTO.setActive(true);
         userDTO.setPassword(utils.passwordEncoder(userDTO.getPassword()));
-
         userServiceImp.salvar(userDTO);
         return "account/registerCheck";
     }
@@ -68,5 +67,7 @@ public class AccountController {
     public String homePage() {
         return "account/login";
     }
+
+
 
 }

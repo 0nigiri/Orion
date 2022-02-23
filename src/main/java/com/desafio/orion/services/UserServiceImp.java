@@ -6,6 +6,7 @@ import com.desafio.orion.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,7 @@ public class UserServiceImp {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserServiceImp(UserRepository userRepository, ModelMapper modelMapper) {
@@ -24,40 +26,50 @@ public class UserServiceImp {
         this.modelMapper = modelMapper;
     }
 
-    public void salvar(UserDTO dto){
+    public void salvar(UserDTO dto) {
         userRepository.save(register(dto));
     }
 
     public List<User> listAll() {
-        return(List<User>) userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
 
-    public void delete(long id){
+    public void delete(long id) {
         userRepository.delete(userRepository.getById(id));
     }
 
-    public User getUserById(long id){
+    public User getUserById(long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(()-> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + id ));
+        return user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + id));
     }
 
-    public User getUserByUsername(String username){
+    public User getUserByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-        return user.orElseThrow(()-> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + username ));
+        return user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + username));
     }
 
-    public User getUserByEmail(String email){
+    public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        return user.orElseThrow(()-> new UsernameNotFoundException("Não foi possivel encontrar o email: " + email ));
+        return user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o email: " + email));
     }
 
+    public void deletar(long id) {
+        Optional<User> user = userRepository.findById(id);
+        user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + id));
+        userRepository.delete(user.get());
+    }
 
 
     public User register(UserDTO userDTO) {
         User user = new User();
         modelMapper.map(userDTO, user);
         return user;
+    }
 
+    public UserDTO updateToDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        modelMapper.map(user, userDTO);
+        return userDTO;
     }
 
 
@@ -65,8 +77,19 @@ public class UserServiceImp {
         return userRepository.findByUsername(username).isPresent();
     }
 
+    public boolean idExists(Long id) {
+        return userRepository.findById(id).isPresent();
+    }
+
     public boolean emailExists(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public boolean passwordChange(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
+        user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + username));
+        return encoder.matches(password, user.get().getPassword());
+
     }
 
 
