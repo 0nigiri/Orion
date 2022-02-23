@@ -7,25 +7,44 @@ Na página de registro, todos os campos são obrigatórios, no campo do Usuário
 No começo do desenvolvimento, eu foquei mais na parte do usuário e suas funcionalidades, já que a maioria delas eu poderia reaproveitar os códigos na hora de criar a parte do SKU. Os usuários, gerentes e admin podem criar um SKU e editar eles, mas apenas os gerente e admin tem a permissão de aprova-los.
 
 O codigo SKU ser divido da seguinte forma:
+
 US/MX/CH - Distribuidora
+
 EN/ES - Lingua
+
 JM/UJ - Contrato- jogo único ou jogos múltiplos, como que a porcentagem pode ser baseada no contrato ela não precisa aparecer no código SKU
+
 01-10 - Numero de Placas
+
 01-05 - Numero de Jogos
+
 H/V/E/N/L/T/D - A quantidade pode variar dependendo do número de jogos com o limite de 5 jogos.
- "Halloween", "Valentine's day", "Easter Sunday", "New Year", "Lunar New Year", "Thanksgiving", "Día de Muertos"
+
+"Halloween", "Valentine's day", "Easter Sunday", "New Year", "Lunar New Year", "Thanksgiving", "Día de Muertos"
+
 1xxxxxxxxx1- O número é baseado no Unix epoch do tempo cadastrado, ou seja, os números nunca vão se repetir.
 
 O unix vai servir como um identificador para achar os dados do Local e Cidade no banco de dados
 
+
 Exemplo Sku:
+
 USENJM0902HL1645580326
+
 Distribuidor- Estados Unidos
+
 Lingua - Ingles
+
 Contrato - Multiplo jogos
+
 Porcentagem - 30%
+
 Quantidade de placas - 9
+
 Quantidade de jogos - 2
+
 Jogos -  Halloween, Lunar new eve
+
 Local - rua natal n20
+
 Cidade - Natal
