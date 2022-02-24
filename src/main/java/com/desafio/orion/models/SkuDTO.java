@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class SkuDTO {
 
+    private long id;
+
     //USA,MEX,CHI
 
     private String distribuidora;
@@ -50,6 +52,7 @@ public class SkuDTO {
 
     private String skuString;
 
+    private boolean isApproved = false;
 
 
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface localCidadeRepository extends JpaRepository<LocalCidade, Long> {
-    Optional<LocalCidade> findByUnixtime(int unixtime);
-
-
+public interface LocalCidadeRepository extends JpaRepository<LocalCidade, Long> {
+    Optional<LocalCidade> findByUnixtime(long unix);
 }

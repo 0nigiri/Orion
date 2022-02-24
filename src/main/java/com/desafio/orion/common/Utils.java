@@ -1,5 +1,6 @@
 package com.desafio.orion.common;
 
+import com.desafio.orion.models.Jogos;
 import com.desafio.orion.models.SkuDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -18,31 +19,32 @@ public class Utils {
 
     public String conversorSkuDtoParaSku(SkuDTO skuDTO) {
         String skuString = "";
+        int jogosCount = 0;
 
         switch (skuDTO.getDistribuidora()) {
-            case "Estados Unidos":
+            case "US":
                 skuString += "US";
                 break;
-            case "Mexico":
+            case "MX":
                 skuString += "MX";
                 break;
-            case "Chile":
+            case "CH":
                 skuString += "CH";
                 break;
         }
         switch (skuDTO.getLingua()) {
-            case "Ingles":
+            case "EN":
                 skuString += "EN";
                 break;
-            case "Espanhol":
+            case "ES":
                 skuString += "ES";
                 break;
         }
         switch (skuDTO.getContrato()) {
-            case "Jogos Multiplos":
-                skuString += "JM";
+            case "MJ":
+                skuString += "MJ";
                 break;
-            case "Unico jogo":
+            case "UJ":
                 skuString += "UJ";
                 break;
         }
@@ -98,34 +100,47 @@ public class Utils {
         for (String jogos : skuDTO.getJogos()) {
             //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
             // "Lunar New Year", "Thanksgiving", "Día de Muertos"
-            switch (jogos) {
-                case "Halloween":
-                    skuString += "H";
-                    break;
-                case "Valentine's day":
-                    skuString += "V";
-                    break;
-                case "Easter Sunday":
-                    skuString += "E";
-                    break;
-                case "New Year":
-                    skuString += "N";
-                    break;
-                case "Lunar New Year":
-                    skuString += "L";
-                    break;
-                case "Thanksgiving":
-                    skuString += "T";
-                    break;
-                case "Día de Muertos":
-                    skuString += "D";
-                    break;
+            if (skuDTO.getNumeroJogos() > jogosCount) {
+                switch (jogos) {
+                    case "H":
+                    case "Halloween":
+                        skuString += "H";
+                        jogosCount++;
+                        break;
+                    case "V":
+                    case "Valentine's day":
+                        skuString += "V";
+                        jogosCount++;
+                        break;
+                    case "E":
+                    case "Easter Sunday":
+                        skuString += "E";
+                        jogosCount++;
+                        break;
+                    case "N":
+                    case "New Year":
+                        skuString += "N";
+                        jogosCount++;
+                        break;
+                    case "L":
+                    case "Lunar New Year":
+                        skuString += "L";
+                        jogosCount++;
+                        break;
+                    case "T":
+                    case "Thanksgiving":
+                        skuString += "T";
+                        jogosCount++;
+                        break;
+                    case "D":
+                    case "Día de Muertos":
+                        skuString += "D";
+                        jogosCount++;
+                        break;
+                }
             }
         }
         skuString += String.valueOf(skuDTO.getUnixTime());
-
-
-
 
 
         return skuString;
@@ -136,68 +151,68 @@ public class Utils {
         SkuDTO skuDTO = new SkuDTO();
         switch (splitSku.get(0)) {
             case "US":
-                skuDTO.setDistribuidora("Estados Unidos");
+                skuDTO.setDistribuidora("US");
                 break;
             case "MX":
-                skuDTO.setDistribuidora("Mexico");
+                skuDTO.setDistribuidora("MX");
                 break;
             case "CH":
-                skuDTO.setDistribuidora("Chile");
+                skuDTO.setDistribuidora("CH");
                 break;
         }
         switch (splitSku.get(1)) {
             case "EN":
-                skuDTO.setLingua("Ingles");
+                skuDTO.setLingua("EN");
                 break;
             case "ES":
-                skuDTO.setLingua("Espanhol");
+                skuDTO.setLingua("ES");
                 break;
         }
         switch (splitSku.get(2)) {
-            case "JM":
-                skuDTO.setContrato("Jogos Multiplos");
+            case "MJ":
+                skuDTO.setContrato("MJ");
                 skuDTO.setPorcentagem("30%");
                 break;
             case "UJ":
-                skuDTO.setContrato("Unico jogo");
+                skuDTO.setContrato("UJ");
                 skuDTO.setPorcentagem("10%");
                 break;
         }
         skuDTO.setQuantidadePlacas(Integer.parseInt(splitSku.get(3)));
         skuDTO.setNumeroJogos(Integer.parseInt(splitSku.get(4)));
         List<String> jogos = new ArrayList<>();
-        for(int i= 5; i <=5+skuDTO.getNumeroJogos();i++){
+        for (int i = 5; i <= 5 + skuDTO.getNumeroJogos(); i++) {
             switch (splitSku.get(i)) {
                 case "H":
-                    jogos.add("Halloween");
+                    jogos.add("H");
                     break;
                 case "V":
-                    jogos.add("Valentine's day");
+                    jogos.add("V");
                     break;
                 case "E":
-                    jogos.add("Easter Sunday");
+                    jogos.add("E");
                     break;
                 case "N":
-                    jogos.add("New Year");
+                    jogos.add("N");
                     break;
                 case "L":
-                    jogos.add("Lunar New Year");
+                    jogos.add("L");
                     break;
                 case "T":
-                    jogos.add("Thanksgiving");
+                    jogos.add("T");
                     break;
                 case "D":
-                    jogos.add("HallowDía de Muertoseen");
+                    jogos.add("D");
                     break;
             }
 
 
-
-
         }
         skuDTO.setJogos(jogos);
-        skuDTO.setUnixTime(Long.parseLong(splitSku.get(splitSku.size()-1)));
+        for (int i = 5 + skuDTO.getNumeroJogos(); i < splitSku.size(); i++) {
+            skuDTO.setUnixTime(Long.parseLong(splitSku.get(i)));
 
+        }
         return skuDTO;
 
     }
@@ -218,7 +233,20 @@ public class Utils {
         result.add(s.substring(j));
 
         return result;
-    }
+    }            //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
+    // "Lunar New Year", "Thanksgiving", "Día de Muertos"
 
+    public List<String> listaJogos() {
+        List<String> listaJogos = new ArrayList<>();
+        listaJogos.add("Halloween");
+        listaJogos.add("Valentine's day");
+        listaJogos.add("Easter Sunday");
+        listaJogos.add("New Year");
+        listaJogos.add("Lunar New Year");
+        listaJogos.add("Thanksgiving");
+        listaJogos.add("Día de Muertos");
+        return listaJogos;
+
+    }
 
 }

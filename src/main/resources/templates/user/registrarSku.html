@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+    <title id="pageTitle">Registrar novo Sku</title>
+</head>
+<body>
+<div th:replace="fragments :: header"/>
+
+<div class="container">
+    <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-user"></i>Registrar SKU
+            </div>
+            <div class="card-block" style="padding: 24px;">
+                <form th:action="@{~/user/add}" method="post" th:object="${skuDTO}">
+                    <fieldset>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Distribuidor</label>
+                            <div>
+                                <select class="form-control form-control-sm"
+                                        id="distribuidora" name="distribuidora" required>
+                                    <option value="" selected="selected" hidden disabled>Selecione seu
+                                        distribuidor
+                                    </option>
+                                    <option th:value="US">Estados Unidos</option>
+                                    <option th:value="MX">Mexico</option>
+                                    <option th:value="CH">Chile</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Lingua</label>
+                            <div>
+                                <select class="form-control form-control-sm col-xxl-12" id="lingua" name="lingua"
+                                        required>
+                                    <option value="" selected="selected" hidden disabled>Selecione sua
+                                        lingua
+                                    </option>
+                                    <option th:value="EN">Ingles</option>
+                                    <option th:value="ES">Espanhol</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Contrato</label>
+                            <div>
+                                <select class="form-control form-control-sm" onchange="contratoPorcentagem()"
+                                        id="contrato" name="contrato"  required  th:errorClass="is-invalid">
+                                    <option value="" selected="selected" hidden disabled>Selecione seu
+                                        contrato
+                                    </option>
+                                    <option th:value="UJ" value="UJ">Unico jogo</option>
+                                    <option th:value="MJ" value="JM">Multiplo jogos</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('contrato')}" th:errors="*{contrato}"
+                                     class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Porcentagem</label>
+                            <div>
+                                <input type="email" class="form-control-plaintext"
+                                       id="porcentagem" name="porcentagem" th:fields="*{porcentagem}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Quantidade de Placas</label>
+                            <div>
+                                <input type="number" class=" form-control-sm form-control col-8"
+                                       th:field="*{quantidadePlacas}" required
+                                       min="1" max="10" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Numero de Jogos</label>
+                            <div>
+                                <input type="number" class="form-control-sm form-control col-8"
+                                       th:field="*{numeroJogos}" required th:errorClass="is-invalid"
+                                       min="1" max="5">
+                                <div th:if="${#fields.hasErrors('numeroJogos')}" th:errors="*{numeroJogos}"
+                                     class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5" >Selecione seu jogos</label>
+                            <div>
+                                <ul>
+                                    <li th:each="listaJogo : ${listaJogo}">
+                                        <div class="ui custom-checkbox">
+                                            <input type="checkbox" id="jogos" name="jogos"  th:value="${listaJogo}"
+                                                   th:text="'  '+ ${listaJogo}" class="check">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-4">Local</label>
+                            <div>
+                                <input type="text" class="form-control" th:field="*{local}" maxlength="30" >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-4">Cidade</label>
+                            <div>
+                                <input type="text" class="form-control" th:field="*{cidade}" maxlength="30" >
+                            </div>
+                        </div>
+
+                        <!-- Confirm Button -->
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Resgistrar</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

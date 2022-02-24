@@ -1,27 +1,26 @@
 package com.desafio.orion.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "local_cidade")
 public class LocalCidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
-    @OneToOne(mappedBy = "localCidade")
+
+    @OneToOne(mappedBy = "localCidade", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private Sku sku;
 
-    private int unixtime;
+    private long unixtime;
 
     private String local;
 
