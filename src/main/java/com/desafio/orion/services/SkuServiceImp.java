@@ -62,6 +62,9 @@ public class SkuServiceImp implements SkuService {
         return skuDTO;
     }
 
+    public List<LocalCidade> findAllLocalCidadeById(Long id) {
+        return localCidadeRepository.findAllByUser_id(id);
+    }
 
 
     public Sku findBySku(String sku) {
@@ -99,6 +102,11 @@ public class SkuServiceImp implements SkuService {
     public void deleteLocalCidade(long id) {
         localCidadeRepository.deleteById(id);
     }
+
+    public void deleteSku(long id) {
+        skuRepository.deleteById(id);
+    }
+
 
     public boolean skuExists(String sku) {
         return skuRepository.findBySkuString(sku).isPresent();

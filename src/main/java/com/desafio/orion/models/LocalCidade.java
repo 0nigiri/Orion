@@ -17,7 +17,7 @@ public class LocalCidade {
     private long id;
 
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(orphanRemoval=true)
     @MapsId
     private Sku sku;
 

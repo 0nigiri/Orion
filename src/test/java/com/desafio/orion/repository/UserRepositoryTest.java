@@ -3,6 +3,7 @@ package com.desafio.orion.repository;
 import com.desafio.orion.common.Utils;
 import com.desafio.orion.models.User;
 import com.desafio.orion.models.UserDTO;
+import com.desafio.orion.services.SkuServiceImp;
 import com.desafio.orion.services.UserServiceImp;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,9 @@ class UserRepositoryTest {
     @Autowired
     UserServiceImp userServiceImp;
 
+    @Autowired
+    SkuServiceImp skuServiceImp;
+
     Utils util = new Utils();
 
     PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -41,8 +45,6 @@ class UserRepositoryTest {
 
         userServiceImp.salvar(user);
         Assertions.assertTrue(userServiceImp.userExists(user.getUsername()));
-
-
     }
 
     @Test
@@ -70,7 +72,7 @@ class UserRepositoryTest {
         user.setFirstName("thiago");
         user.setLastName("onishi");
 
-        userServiceImp.salvar(user);
+        userServiceImp.updateUser(user);
 
         User checkUser = userServiceImp.getUserByUsername("admin");
         Assertions.assertTrue(checkUser.getFirstName().equals("thiago"));

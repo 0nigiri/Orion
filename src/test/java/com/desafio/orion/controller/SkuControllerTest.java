@@ -4,6 +4,7 @@ import com.desafio.orion.common.Utils;
 import com.desafio.orion.models.LocalCidade;
 import com.desafio.orion.models.Sku;
 import com.desafio.orion.models.SkuDTO;
+import com.desafio.orion.models.UserDTO;
 import com.desafio.orion.services.SkuServiceImp;
 import com.desafio.orion.services.UserServiceImp;
 import org.junit.jupiter.api.Assertions;
@@ -40,6 +41,11 @@ class SkuControllerTest {
 
     @Test
     public void testConverterSkuDTOParaSku() {
+
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
 
         //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
         // "Lunar New Year", "Thanksgiving", "Día de Muertos"
@@ -98,6 +104,9 @@ class SkuControllerTest {
     @Test
     public void testSalvarBD() {
 
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
 
         SkuDTO skuDTO = new SkuDTO();
         List<String> jogos = new ArrayList<>();
@@ -118,8 +127,6 @@ class SkuControllerTest {
         skuDTO.setUnixTime(Instant.now().getEpochSecond());
         skuDTO.setSkuString(util.conversorSkuDtoParaSku(skuDTO));
         System.out.println(util.conversorSkuDtoParaSku(skuDTO));
-
-
         skuServiceImp.salvarNovoSku(skuDTO);
 
         Sku skuDdb = skuServiceImp.findBySku(skuDTO.getSkuString());
@@ -140,6 +147,10 @@ class SkuControllerTest {
     @Test
     public void findByUnix() {
 
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
 
         SkuDTO skuDTO = new SkuDTO();
         List<String> jogos = new ArrayList<>();
@@ -155,7 +166,7 @@ class SkuControllerTest {
         skuDTO.setJogos(jogos);
         skuDTO.setLocal("Rua natal n 299");
         skuDTO.setCidade("Natal");
-        skuDTO.setUnixTime(Instant.now().getEpochSecond()+10);
+        skuDTO.setUnixTime(Instant.now().getEpochSecond() + 10);
         skuDTO.setUsername("thiagonixi");
         long unixsearch = skuDTO.getUnixTime();
         skuDTO.setSkuString(util.conversorSkuDtoParaSku(skuDTO));
@@ -173,17 +184,52 @@ class SkuControllerTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindBySkuAndParseBySku() {
 
-        Sku sku = skuServiceImp.findById(3);
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
+        SkuDTO skuDTO = new SkuDTO();
+        List<String> jogos = new ArrayList<>();
+        jogos.add("Halloween");
+        jogos.add("Lunar New Year");
+        jogos.add("Día de Muertos");
+        skuDTO.setDistribuidora("US");
+        skuDTO.setLingua("EN");
+        skuDTO.setContrato("MJ");
+        skuDTO.setPorcentagem("30%");
+        skuDTO.setQuantidadePlacas(9);
+        skuDTO.setNumeroJogos(3);
+        skuDTO.setJogos(jogos);
+        skuDTO.setLocal("Rua natal n299");
+        skuDTO.setCidade("Natal");
+        skuDTO.setUsername("thiagonixi");
+        skuDTO.setEmail("thiagonixi@gmail.com");
+        skuDTO.setUnixTime(Instant.now().getEpochSecond());
+        skuDTO.setSkuString(util.conversorSkuDtoParaSku(skuDTO));
+        System.out.println(util.conversorSkuDtoParaSku(skuDTO));
+        skuServiceImp.salvarNovoSku(skuDTO);
+
+
+        Sku sku = skuServiceImp.findBySku(skuDTO.getSkuString());
         SkuDTO dbDTO = skuServiceImp.dbToDTO(sku);
-        System.out.println(dbDTO);
+        skuDTO.setId(dbDTO.getId());
+
+        Assertions.assertTrue(skuServiceImp.skuExists(skuDTO.getSkuString()));
+        Assertions.assertEquals(dbDTO, skuDTO);
 
     }
 
 
     @Test
     public void testListaLocais() {
+
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
+
         SkuDTO skuDTO = new SkuDTO();
         List<String> jogos = new ArrayList<>();
         jogos.add("H");
@@ -199,7 +245,7 @@ class SkuControllerTest {
         skuDTO.setJogos(jogos);
         skuDTO.setLocal("Rua natal n299");
         skuDTO.setCidade("Natal");
-        skuDTO.setUnixTime(Instant.now().getEpochSecond()+213);
+        skuDTO.setUnixTime(Instant.now().getEpochSecond() + 213);
         skuDTO.setSkuString(util.conversorSkuDtoParaSku(skuDTO));
         skuServiceImp.salvarNovoSku(skuDTO);
 
@@ -223,10 +269,10 @@ class SkuControllerTest {
 
         List<LocalCidade> lista = skuServiceImp.findListLocalCidade();
 
-        Assertions.assertEquals(skuDTO.getCidade(), lista.get(1).getCidade());
-        Assertions.assertEquals(skuDTO.getLocal(), lista.get(1).getLocal());
-        Assertions.assertEquals(skuDTO2.getCidade(), lista.get(2).getCidade());
-        Assertions.assertEquals(skuDTO2.getLocal(), lista.get(2).getLocal());
+        Assertions.assertEquals(skuDTO.getCidade(), lista.get(0).getCidade());
+        Assertions.assertEquals(skuDTO.getLocal(), lista.get(0).getLocal());
+        Assertions.assertEquals(skuDTO2.getCidade(), lista.get(1).getCidade());
+        Assertions.assertEquals(skuDTO2.getLocal(), lista.get(1).getLocal());
 
 
     }
@@ -234,6 +280,11 @@ class SkuControllerTest {
 
     @Test
     public void testListaSku() {
+
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
         SkuDTO skuDTO = new SkuDTO();
         List<String> jogos = new ArrayList<>();
         jogos.add("H");
@@ -306,6 +357,11 @@ class SkuControllerTest {
 
     @Test
     public void testDeletar() {
+
+        UserDTO user2 = new UserDTO("thiago", "onishi", "thiagonixi", "thiagonixi@gmail.com", "admin", "123455678", true, "USER");
+        user2.setPassword(util.passwordEncoder(user2.getPassword()));
+        userServiceImp.salvar(user2);
+
         SkuDTO skuDTO = new SkuDTO();
         List<String> jogos = new ArrayList<>();
         jogos.add("H");
@@ -321,7 +377,7 @@ class SkuControllerTest {
         skuDTO.setLocal("Rua natal n299");
         skuDTO.setCidade("Natal");
         skuDTO.setUsername("thiagonixi");
-        skuDTO.setUnixTime(Instant.now().getEpochSecond()+2);
+        skuDTO.setUnixTime(Instant.now().getEpochSecond() + 2);
         skuDTO.setSkuString(util.conversorSkuDtoParaSku(skuDTO));
         skuServiceImp.salvarNovoSku(skuDTO);
 
@@ -339,7 +395,7 @@ class SkuControllerTest {
         skuDTO2.setJogos(jogos2);
         skuDTO2.setLocal("Rua china n299");
         skuDTO2.setCidade("brasil");
-        skuDTO2.setUnixTime(Instant.now().getEpochSecond() + 2);
+        skuDTO2.setUnixTime(Instant.now().getEpochSecond() + 5);
         skuDTO2.setSkuString(util.conversorSkuDtoParaSku(skuDTO2));
         skuServiceImp.salvarNovoSku(skuDTO2);
         Assertions.assertTrue(skuServiceImp.skuExists(skuDTO2.getSkuString()));

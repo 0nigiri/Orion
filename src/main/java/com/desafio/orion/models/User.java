@@ -41,7 +41,7 @@ public class User {
 
     private boolean active;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<LocalCidade> localCidades;
 
     private String roles = "";

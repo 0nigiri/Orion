@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,12 +84,12 @@ public class UserServiceImp {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public boolean passwordChange(String username, String password) {
-        Optional<User> user = userRepository.findByUsername(username);
-        user.orElseThrow(() -> new UsernameNotFoundException("Não foi possivel encontrar o usuario: " + username));
-        return encoder.matches(password, user.get().getPassword());
 
+    public void updateUser(UserDTO userDTO) {
+        UserDTO getList = updateToDTO(getUserById(userDTO.getId()));
+        userDTO.setLocalCidades(getList.getLocalCidades());
+        User user = new User();
+        modelMapper.map(userDTO, user);
+        userRepository.save(user);
     }
-
-
 }

@@ -7,6 +7,7 @@ import com.desafio.orion.services.SkuServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -115,25 +116,27 @@ public class UserController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.skuDTO", result);
             return "redirect:/user/update/" + id;
         }
+
         skuService.salvarNovoSku(skuDTO);
         return "redirect:/user/listaLocal";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/aprovar/{id}")
     public String aprovarLocal(@PathVariable(name = "id") long id, Model model) {
         List<String> listaJogo = util.listaJogos();
         model.addAttribute("listaJogo", listaJogo);
 
         if (model.containsAttribute("skuDTO")) {
-            return "user/aprovarLocal";
+            return "admin/aprovarLocal";
         }
 
         Sku sku = skuService.findById(id);
         SkuDTO dbDTO = skuService.dbToDTO(sku);
         model.addAttribute("skuDTO", dbDTO);
-        return "user/aprovarLocal";
+        return "admin/aprovarLocal";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping("/aprovar/{id}")
     public String aprove(@PathVariable(name = "id") long id, @Valid SkuDTO skuDTO, Model model) {
         log.info(">>  skuDTO : {}", skuDTO.toString());
