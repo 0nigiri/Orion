@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head">
+    <title id="pageTitle">Aprovar Local</title>
+</head>
+<body>
+<div th:replace="fragments :: header"/>
+
+<div class="container">
+    <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-user"></i>Atualizar SKU
+            </div>
+            <div class="card-block" style="padding: 24px;">
+                <form th:action="@{~/user/aprovar/{id}(id=${skuDTO.id})}" method="post" th:object="${skuDTO}">
+                    <fieldset>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Usuario:</label>
+                            <div>
+                                <input type="text" class="form-control-plaintext" th:field="*{username}"
+                                       maxlength="12" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Distribuidora:</label>
+                            <div th:switch="${skuDTO.distribuidora}">
+                                <div th:case="'US'">
+                                    <p class="form-control-plaintext ">Estados Unidos</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{distribuidora}" readonly>
+                                </div>
+                                <div th:case="'MX'">
+                                    <p class="form-control-plaintext ">México</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{distribuidora}" readonly>
+                                </div>
+                                <div th:case="'CH'">
+                                    <p class="form-control-plaintext ">Chile</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{distribuidora}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Lingua:</label>
+                            <div th:switch="${skuDTO.lingua}">
+                                <div th:case="'EN'">
+                                    <p class="form-control-plaintext ">Inglês</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{lingua}" readonly>
+                                </div>
+                                <div th:case="'ES'">
+                                    <p class="form-control-plaintext ">Espanhol</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{lingua}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Contrato:</label>
+                            <div th:switch="${skuDTO.contrato}">
+                                <div th:case="'UJ'">
+                                    <p class="form-control-plaintext ">Único Jogo</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{contrato}" readonly>
+                                </div>
+                                <div th:case="'MJ'">
+                                    <p class="form-control-plaintext ">Múltiplos jogos</p>
+                                    <input hidden type="text" class="form-control-plaintext"
+                                           th:field="*{contrato}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Porcentagem:</label>
+                            <div>
+                                <input type="email" class="form-control-plaintext"
+                                       id="porcentagem" name="porcentagem" th:fields="*{porcentagem}"
+                                       th:value="*{porcentagem}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Quantidade de Placas:</label>
+                            <div>
+                                <input type="text" class="form-control-plaintext" th:field="*{quantidadePlacas}"
+                                       maxlength="12" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5"> Numero de Jogos:</label>
+                            <div>
+                                <input type="text" class="form-control-plaintext" th:field="*{numeroJogos}"
+                                       maxlength="12" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-5">Selecione seu jogos:</label>
+                            <div>
+                                <ul th:each="listaJogo : *{jogos}">
+
+                                    <input type="text" class="form-control-plaintext" id="jogos" name="jogos"
+                                           th:value="${listaJogo}">
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-4">Local:</label>
+                            <div>
+                                <input type="text" class="form-control-plaintext" th:field="*{local}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-4">Cidade:</label>
+                            <div>
+                                <input type="text" class="form-control-plaintext" th:field="*{cidade}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row" hidden>
+                            <label class="col-form-label col-4">Unix</label>
+                            <div>
+                                <input type="text" class="form-control" th:field="*{unixTime}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Button -->
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">Aprovar</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

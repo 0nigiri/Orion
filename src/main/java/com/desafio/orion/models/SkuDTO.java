@@ -1,11 +1,7 @@
 package com.desafio.orion.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -51,6 +47,9 @@ public class SkuDTO {
     private long unixTime;
 
     private String skuString;
+
+    private String username;
+    private String email;
 
     private boolean isApproved = false;
 

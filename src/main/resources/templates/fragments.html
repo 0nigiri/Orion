@@ -7,11 +7,14 @@
     <link href="/css/sort.css" type="text/css">
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-grid.css" rel="stylesheet">
+    <link href="/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="/fontawesome/css/all.css" rel="stylesheet">
     <script th:inline="javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript" src="/js/jquery.dataTables.min.js"></script>
     <script th:inline="javascript" src="/js/bootstrap.js"></script>
     <script th:inline="javascript" src="/js/utils.js"></script>
     <script th:inline="javascript" src="/js/search.js"></script>
+
     <title>Header</title>
 </head>
 <body>
@@ -34,11 +37,11 @@
                 </li>
 
                 <li class="nav-item active" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#" th:href="@{~/user/listaSku}">Lista de Sku </span></a>
+                    <a class="nav-link" href="#" th:href="@{~/user/listaLocal}">Lista de Espera</a>
                 </li>
 
                 <li class="nav-item active" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="#" th:href="@{~/user/listaEspera}">Lista de Espera</a>
+                    <a class="nav-link" href="#" th:href="@{~/user/listaAprovado}">Lista de Locais Aprovados</a>
                 </li>
 
 

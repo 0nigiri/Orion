@@ -1,6 +1,5 @@
 package com.desafio.orion.common;
 
-import com.desafio.orion.models.Jogos;
 import com.desafio.orion.models.SkuDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -23,28 +22,35 @@ public class Utils {
 
         switch (skuDTO.getDistribuidora()) {
             case "US":
+            case "Estados Unidos":
                 skuString += "US";
                 break;
             case "MX":
+            case "México":
                 skuString += "MX";
                 break;
             case "CH":
+            case "Chile":
                 skuString += "CH";
                 break;
         }
         switch (skuDTO.getLingua()) {
             case "EN":
+            case "Inglês":
                 skuString += "EN";
                 break;
             case "ES":
+            case "Espanhol":
                 skuString += "ES";
                 break;
         }
         switch (skuDTO.getContrato()) {
             case "MJ":
+            case "Múltiplos Jogos":
                 skuString += "MJ";
                 break;
             case "UJ":
+            case "Único Jogo":
                 skuString += "UJ";
                 break;
         }
@@ -182,27 +188,29 @@ public class Utils {
         skuDTO.setNumeroJogos(Integer.parseInt(splitSku.get(4)));
         List<String> jogos = new ArrayList<>();
         for (int i = 5; i <= 5 + skuDTO.getNumeroJogos(); i++) {
+            //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
+            // "Lunar New Year", "Thanksgiving", "Día de Muertos"
             switch (splitSku.get(i)) {
                 case "H":
-                    jogos.add("H");
+                    jogos.add("Halloween");
                     break;
                 case "V":
-                    jogos.add("V");
+                    jogos.add("Valentine's day");
                     break;
                 case "E":
-                    jogos.add("E");
+                    jogos.add("Easter Sunday");
                     break;
                 case "N":
-                    jogos.add("N");
+                    jogos.add("New Year");
                     break;
                 case "L":
-                    jogos.add("L");
+                    jogos.add("Lunar New Year");
                     break;
                 case "T":
-                    jogos.add("T");
+                    jogos.add("Thanksgiving");
                     break;
                 case "D":
-                    jogos.add("D");
+                    jogos.add("Día de Muertos");
                     break;
             }
 
@@ -233,7 +241,8 @@ public class Utils {
         result.add(s.substring(j));
 
         return result;
-    }            //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
+    }
+    //"Halloween", "Valentine's day", "Easter Sunday", "New Year"
     // "Lunar New Year", "Thanksgiving", "Día de Muertos"
 
     public List<String> listaJogos() {

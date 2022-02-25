@@ -9,4 +9,5 @@ import java.util.Optional;
 @Component
 public interface SkuService {
     public List<Sku> findAll();
+    public Sku findById(long id);
 }

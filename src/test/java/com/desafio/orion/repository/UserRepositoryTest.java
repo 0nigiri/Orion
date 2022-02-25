@@ -4,28 +4,17 @@ import com.desafio.orion.common.Utils;
 import com.desafio.orion.models.User;
 import com.desafio.orion.models.UserDTO;
 import com.desafio.orion.services.UserServiceImp;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-@RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureTestDatabase(
         replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest
@@ -37,7 +26,6 @@ class UserRepositoryTest {
     Utils util = new Utils();
 
     PasswordEncoder encoder = new BCryptPasswordEncoder();
-
 
 
     @Test
@@ -52,15 +40,15 @@ class UserRepositoryTest {
         user.setActive(true);
 
         userServiceImp.salvar(user);
-        assertTrue(userServiceImp.userExists(user.getUsername()));
+        Assertions.assertTrue(userServiceImp.userExists(user.getUsername()));
 
 
     }
 
     @Test
     public void testFindByEmail() {
-        String email = "thi1ago@gmail.com";
-        assertTrue(userServiceImp.emailExists(email));
+        String email = "admin@gmail.com";
+        Assertions.assertTrue(userServiceImp.emailExists(email));
 
     }
 
@@ -68,16 +56,16 @@ class UserRepositoryTest {
     public void testIfDBIsNotEmpty() {
         List<User> list = new ArrayList<>();
         list = userServiceImp.listAll();
-        assertFalse(list.isEmpty());
+        Assertions.assertFalse(list.isEmpty());
     }
 
     @Test
-    public void testUpdateData(){
+    public void testUpdateData() {
         User getUser = userServiceImp.getUserByUsername("admin");
 
-        assertTrue(getUser.getUsername().equals("admin"));
+        Assertions.assertTrue(getUser.getUsername().equals("admin"));
         UserDTO user = userServiceImp.updateToDTO(getUser);
-        assertTrue(user.getUsername().equals("admin"));
+        Assertions.assertTrue(user.getUsername().equals("admin"));
 
         user.setFirstName("thiago");
         user.setLastName("onishi");
@@ -85,15 +73,12 @@ class UserRepositoryTest {
         userServiceImp.salvar(user);
 
         User checkUser = userServiceImp.getUserByUsername("admin");
-        assertTrue(checkUser.getFirstName().equals("thiago"));
-        assertTrue(checkUser.getLastName().equals("onishi"));
-        assertTrue(encoder.matches("admin", checkUser.getPassword()));
-
-
+        Assertions.assertTrue(checkUser.getFirstName().equals("thiago"));
+        Assertions.assertTrue(checkUser.getLastName().equals("onishi"));
+        Assertions.assertTrue(encoder.matches("admin", checkUser.getPassword()));
 
 
     }
-
 
 
     @Test
@@ -113,11 +98,11 @@ class UserRepositoryTest {
         User userTest = new User();
         userTest = userServiceImp.getUserByUsername(user.getUsername());
 
-        assertTrue(encoder.matches("123456",userTest.getPassword()));
+        Assertions.assertTrue(encoder.matches("123456", userTest.getPassword()));
 
         userServiceImp.delete(userTest.getId());
 
-        assertFalse(userServiceImp.emailExists("thi1agox@gmail.com"));
+        Assertions.assertFalse(userServiceImp.emailExists("thi1agox@gmail.com"));
 
 
     }

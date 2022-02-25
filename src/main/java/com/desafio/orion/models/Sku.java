@@ -17,9 +17,9 @@ public class Sku {
 
     private String skuString;
 
-    @OneToOne
-    @MapsId
+    @OneToOne(mappedBy = "sku",  fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private  LocalCidade localCidade;
 
-    private Boolean isApproved = false;
+
 }

@@ -1,7 +1,8 @@
 package com.desafio.orion.models;
 
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -16,8 +17,8 @@ public class LocalCidade {
     private long id;
 
 
-    @OneToOne(mappedBy = "localCidade", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapsId
     private Sku sku;
 
     private long unixtime;
@@ -26,5 +27,24 @@ public class LocalCidade {
 
     private String cidade;
 
+    private boolean isApproved = false;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
+
+
+    public Long getUser_id() {
+        return user.getId();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }
