@@ -64,7 +64,7 @@
                             <label class="col-form-label col-4">RUT</label>
                             <div>
                                 <input type="text" class="form-control" th:field="*{rut}" th:errorClass="is-invalid"
-                                       pattern="^[0-9\.\-]+$">
+                                       pattern="^[0-9\.\-].*[k\0-9]+$">
                                 <div th:if="${#fields.hasErrors('rut')}" th:errors="*{rut}"
                                      class="invalid-feedback" style="width: 200px; max-width: 200px;"></div>
                             </div>
