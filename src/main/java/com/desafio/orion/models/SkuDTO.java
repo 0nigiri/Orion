@@ -35,6 +35,7 @@ public class SkuDTO {
     // "Halloween", "Valentine's day", "Easter Sunday", "New Year", "Lunar New Year", "Thanksgiving", "Día de Muertos"
 
     private List<String> jogos;
+    private List<String> newJogos;
 
     //id do local
 

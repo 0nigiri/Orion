@@ -32,11 +32,12 @@ public class UserController {
     @Autowired
     private SkuServiceImp skuService;
 
-    @GetMapping("/listaLocal")
+    @GetMapping("/listaEspera")
     public String listaLocal(Model model) {
         model.addAttribute("listaSKU", skuService.findAlltoDTO());
         return "user/listaLocal";
     }
+
     @GetMapping("/listaAprovado")
     public String listaLocalAprovado(Model model) {
         model.addAttribute("listaSKU", skuService.findAlltoDTO());
@@ -56,10 +57,16 @@ public class UserController {
     public String addLocal(@Valid SkuDTO skuDTO, BindingResult result, Model model) {
         log.info(">>  skuDTO : {}", skuDTO.toString());
         //Validador dados
+        skuDTO.getJogos().removeIf(String::isEmpty);
         if (skuDTO.getNumeroJogos() != skuDTO.getJogos().size()) {
             result.addError(new FieldError("userDTO", "numeroJogos"
                     , "Numero de jogos esta invalido!"));
         }
+        if (skuDTO.getJogos().isEmpty()) {
+            result.addError(new FieldError("userDTO", "getJogos"
+                    , "Numero de jogos esta invalido!"));
+        }
+
         if (skuDTO.getContrato().equals("UJ") && skuDTO.getJogos().size() > 1) {
             result.addError(new FieldError("userDTO", "contrato"
                     , "Numero de jogo esperado esta acima do contrato"));
@@ -71,12 +78,13 @@ public class UserController {
 
         if (result.hasErrors()) {
             List<String> listaJogo = util.listaJogos();
+            skuDTO.getJogos().clear();
             model.addAttribute("listaJogo", listaJogo);
             return "user/registrarLocal";
         }
         skuDTO.setUnixTime(Instant.now().getEpochSecond());
         skuService.salvarNovoSku(skuDTO);
-        return "redirect:/user/listaLocal";
+        return "redirect:/user/listaEspera";
     }
 
 
@@ -98,15 +106,22 @@ public class UserController {
     @PostMapping("/update/{id}")
     public String update(@PathVariable(name = "id") long id, @Valid SkuDTO skuDTO, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         log.info(">>  skuDTO : {}", skuDTO.toString());
-        if (skuDTO.getNumeroJogos() != skuDTO.getJogos().size()) {
+        skuDTO.getNewJogos().removeIf(String::isEmpty);
+        skuDTO.getJogos().removeIf(String::isEmpty);
+        if (skuDTO.getNumeroJogos() != skuDTO.getNewJogos().size()) {
             result.addError(new FieldError("userDTO", "numeroJogos"
                     , "Numero de jogos esta invalido!"));
         }
-        if (skuDTO.getContrato().equals("UJ") && skuDTO.getJogos().size() > 1) {
+        if (skuDTO.getNewJogos().isEmpty()) {
+            result.addError(new FieldError("userDTO", "getNewJogos"
+                    , "Numero de jogos esta invalido!"));
+
+        }
+        if (skuDTO.getContrato().equals("UJ") && skuDTO.getNewJogos().size() > 1) {
             result.addError(new FieldError("userDTO", "contrato"
                     , "Numero de jogo esperado esta acima do contrato"));
         }
-        if (skuDTO.getContrato().equals("MJ") && skuDTO.getJogos().size() == 1) {
+        if (skuDTO.getContrato().equals("MJ") && skuDTO.getNewJogos().size() == 1) {
             result.addError(new FieldError("userDTO", "contrato"
                     , "Numero de jogo esperado esta abaixo do contrato"));
         }
@@ -114,11 +129,13 @@ public class UserController {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("skuDTO", skuDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.skuDTO", result);
+            skuDTO.getNewJogos().clear();
             return "redirect:/user/update/" + id;
         }
-
+        skuDTO.getJogos().clear();
+        skuDTO.getJogos().addAll(skuDTO.getNewJogos());
         skuService.salvarNovoSku(skuDTO);
-        return "redirect:/user/listaLocal";
+        return "redirect:/user/listaEspera";
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
@@ -136,6 +153,7 @@ public class UserController {
         model.addAttribute("skuDTO", dbDTO);
         return "admin/aprovarLocal";
     }
+
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping("/aprovar/{id}")
     public String aprove(@PathVariable(name = "id") long id, @Valid SkuDTO skuDTO, Model model) {
@@ -143,7 +161,7 @@ public class UserController {
 
         skuDTO.setApproved(true);
         skuService.salvarNovoSku(skuDTO);
-        return "redirect:/user/listaLocal";
+        return "redirect:/user/listaEspera";
     }
 
 
@@ -151,9 +169,8 @@ public class UserController {
     public String deletar(@PathVariable(name = "id") long id, SkuDTO skuDTO, Model model) {
         log.info(">>  skuDTO : {}", skuDTO.toString());
         skuService.deleteLocalCidade(id);
-        return "redirect:/user/listaLocal";
+        return "redirect:/user/listaEspera";
     }
-
 
 
 }
