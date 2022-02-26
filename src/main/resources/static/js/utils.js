@@ -49,8 +49,8 @@ function contratoPorcentagem() {
 jQuery(function () {
 
     const checkboxes = jQuery('input[type="checkbox"]');
-
     checkboxes.click(function () {
+        console.log(checkboxes);
         // let max = 3;
         let s = document.getElementById("numeroJogos").value;
         let max = isNaN(parseInt(s)) ? 0 : parseInt(s);
