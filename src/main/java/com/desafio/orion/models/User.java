@@ -1,6 +1,8 @@
 package com.desafio.orion.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USER_TBL")
+@Table(name = "user_tbl")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +40,9 @@ public class User {
     private String rut;
 
     private boolean active;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<LocalCidade> localCidades;
 
     private String roles = "";
 

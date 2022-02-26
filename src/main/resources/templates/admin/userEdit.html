@@ -55,7 +55,7 @@
                         <div class="form-group row" hidden>
                             <label class="col-form-label col-4">Senha</label>
                             <div>
-                                <input type="hidden" class="form-control" th:field="*{password}"   id="newPassword"
+                                <input type="hidden" class="form-control" th:field="*{password}"   id="password"
                                        maxlength="12" th:errorClass="is-invalid" th:autocomplete="on" autocomplete="">
                                 <input type="checkbox" th:onclick="showPassword()">Mostrar senha
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
@@ -72,8 +72,8 @@
                             <label class="col-form-label col-4" th:for="roles">Role</label>
                             <div>
                                 <select class="form-control form-control-sm" th:field="*{roles}" th:selected="*{roles}">
-                                    <option th:value="USER">USER</option>
-                                    <option th:value="ADMIN">ADMIN</option>
+                                    <option th:value="USER">Usuario</option>
+                                    <option th:value="MANAGER">Gerente</option>
                                 </select>
                             </div>
                         </div>

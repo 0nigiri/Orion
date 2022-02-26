@@ -11,6 +11,10 @@
         </div>
         <div>
             <h3 sec:authorize="isAnonymous()">
+                 <a th:href="@{/login}"> Fazer login</a>
+            </h3>
+
+            <h3 sec:authorize="isAnonymous()">
                 Usuario novo? <a th:href="@{/register}"> Criar nova conta</a>
             </h3>
 

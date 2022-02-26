@@ -46,6 +46,9 @@ public class UserDTO
 
     private String permissions = "";
 
+    private List<LocalCidade> localCidades;
+
+
     public UserDTO(String username, String password, String roles, String permissions) {
         this.username = username;
         this.password = password;

@@ -1,16 +1,13 @@
 package com.desafio.orion.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "Sku")
 public class Sku {
 
@@ -18,9 +15,11 @@ public class Sku {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String sku;
+    private String skuString;
 
-    @OneToOne
-    @JoinColumn(name = "local_cidade_id")
+    @OneToOne(mappedBy = "sku",  fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private  LocalCidade localCidade;
+
+
 }
