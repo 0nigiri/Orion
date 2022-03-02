@@ -28,6 +28,7 @@ Assim que o registro for completo, voltaremos para a pagina da lista de espera, 
 aumentar o cargo dele
 ![image](https://user-images.githubusercontent.com/26257093/155836674-235caad4-b9bd-4163-8b08-f2c412795369.png)
 
+Primeiro devemos fazer o logout nessa conta  e entao fazer login na conta do admin(usuario admin, senha admin) e entao devemos ir para a pagina de lista de usuario e editar ele de user para manager
 ![image](https://user-images.githubusercontent.com/26257093/155836214-0c5f5f5a-0a9d-484a-a31d-30da6646aa07.png)
 ![image](https://user-images.githubusercontent.com/26257093/155836216-18a2bce1-3362-471d-95a5-45217fb02e26.png)
 ![image](https://user-images.githubusercontent.com/26257093/155836223-477309d4-e9f4-4876-b8fa-aa0bf62c39dc.png)
